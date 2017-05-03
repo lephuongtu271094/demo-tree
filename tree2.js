@@ -1,12 +1,12 @@
-    const fs = require('fs')
-    const path = require('path')
-    const color = require('colors')
-    const dir = './abc'
-    let tem = '   '
-    let count_folder = 0;
-    let count_file = 0;
-    tree = (dir) => {
-    let files = fs.readdirSync(dir);
+const fs = require('fs')
+const path = require('path')
+const color = require('colors')
+const dir = './abc'
+let tem = '   '
+let count_folder = 0;
+let count_file = 0;
+tree = (dir) => {
+let files = fs.readdirSync(dir);
     for (let i = 0 ; i < files.length ; i++){
         let name = dir+'/'+files[i];
         if(fs.statSync(name).isFile()){
@@ -32,12 +32,12 @@
             if(i === files.length-1){
                 tem+= '    '
             }else {
-                tem += '|   '
+                tem += '│   '
             } 
             tree(name)
             tem = tem.substr(0,tem.length-4)
         }
     }
-    }
+}
 tree(dir)
 console.log(count_folder + ' directories' + ' , ' + count_file + ' files' )
