@@ -1,5 +1,4 @@
-# Liệt kê thư mục từ 1 đường dẫn nhập vào từ Terminal(dùng Recursive)
-
+# Hiển thị thư mục dạng tree (sử dụng Recursive)
 ## Các Module sử dụng:
 * fs, path(Các module có sắn trong Node.js)
 * modul Color để sử dụng màu trong Nodejs
@@ -9,8 +8,8 @@
 * B2:Tiến hành đọc tuần tự các file trong thư mục nếu phần tử thứ i trong mảng là file hoặc thư mục thì in ra tên file hoặc thư mục đó, đồng thời kiểm tra xem hiện tại đó có phải là thư mục không nếu là thư mục thì Gọi đệ quy quay lại B1 (với tham số là đường dẫn mới),
 * B3: Bài toán kết thúc khi lặp hết mảng 
 ## Code xử lý chính
-``` javascript
-    let tem = '   '
+``` 
+let tem = '   '
 let count_folder = 0;
 let count_file = 0;
 let tree = (dir) => {
@@ -30,7 +29,7 @@ let tree = (dir) => {
 ```
 ## Giải thích
 * Khi gặp 1 thư mục thì kiểm tra xem đó có phải là thư mục cuối cùng của mảng (chứa các file và thư mục) nếu là thư mục cuối cùng thì sẽ tăng biến tem+='____' nếu không là thư mục cuối cùng thì biến tem+='|___';
-``` javascript
+```
         if (fs.statSync(name).isDirectory()) {
             if (i === files.length - 1) {
                 tem += '    '
@@ -40,7 +39,7 @@ let tree = (dir) => {
 
 ```
 * gọi lại tree(name) và đồng thời cắt chuỗi tem bớt 4 dấu cách vì mỗi 1 lần gọi đệ quy thì biến tem sẽ tăng lên do đó để trong cùng 1 thư mục thì các file và folder phải cùng cấp nhau:
-``` javascript
+```
             tree(name)
             tem = tem.substr(0, tem.length - 4)
 ```
