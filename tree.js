@@ -1,35 +1,43 @@
 const fs = require('fs')
 const path = require('path')
-
-
-var walk = function(dir, done) {
-  var results = [];
-  fs.readdir(dir, function(err, list) {
-    if (err) return done(err);
-    var pending = list.length;
-    if (!pending) return done(null, results);
-    list.forEach(function(file) {
-      file = path.resolve(dir, file);
-      fs.stat(file, function(err, stat) {
-        if (stat && stat.isDirectory()) {
-          walk(file, function(err, res) {
-            results = results.concat(res);
-            if (!--pending) done(null, results);
-          });
-        } else {
-          results.push(file);
-          if (!--pending) done(null, results );
+const color = require('colors')
+const dir = './abc'
+let tem = '   '
+let count_folder = 0;
+let count_file = 0;
+tree = (dir) => {
+let files = fs.readdirSync(dir);
+    for (let i = 0 ; i < files.length ; i++){
+        let name = dir+'/'+files[i];
+        if(fs.statSync(name).isFile()){
+            count_file += 1
+        }else if(fs.statSync(name).isDirectory()){
+            count_folder += 1
         }
-      });
-    });
-  });
-};
+        if (i === files.length -1){
+            if(fs.statSync(name).isDirectory()){
+                console.log(tem + '└── '  + files[i].blue)
+            }else {
+                 console.log(tem + '└── '  + files[i])
+            }
 
-
-walk('/home/tu/Desktop/demo-tree/abc/', function(err, results) {
-  if (err) throw err;
-  console.log(results);
-});
-
-var list_file_to_delete = ["/images/a1.jpg", "/images/a2.jpg", "/images/a3.jpg"]
-fs.unlink(home/tu/Desktop/demo-tree/abc/ , function(err) {console.log("success")})
+        }else {
+            if(fs.statSync(name).isDirectory()){
+                console.log(tem + '├── '  + files[i].blue)
+            }else {
+                 console.log(tem + '├── '  + files[i])
+            }
+        }
+        if (fs.statSync(name).isDirectory()){
+            if(i === files.length-1){
+                tem+= '    '
+            }else {
+                tem += '│   '
+            }
+            tree(name)
+            tem = tem.substr(0,tem.length-4)
+        }
+    }
+}
+tree(dir)
+console.log(count_folder + ' directories' + ' , ' + count_file + ' files' )
